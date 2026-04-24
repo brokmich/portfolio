@@ -1,0 +1,47 @@
+/* ── Main container: fills entire viewport ── */
+.welcome-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #F7E7E8;
+  background-image:
+    linear-gradient(#FFF0F1 2px, transparent 2px),
+    linear-gradient(90deg, #FFF0F1 2px, transparent 2px);
+  background-size: 3.5vw 3.5vw;
+  cursor: default;
+  user-select: none;
+}
+
+/* ── Parallax layer fills the container ── */
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.parallax-layer > * {
+  pointer-events: auto;
+}
+
+/* ── Base image element ── */
+.scene-element {
+  position: absolute;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* ── Letter wrapper ── */
+.letter-wrapper {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* ── Letter: scaled down to match SCALE factor ── */
+.letter-img {
+  display: block;
+  width: 2.65vw;
+  min-width: 22px;
+  height: auto;
+  pointer-events: none;
+}
