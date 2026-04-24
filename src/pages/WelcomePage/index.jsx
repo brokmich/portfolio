@@ -119,7 +119,7 @@ export default function WelcomePage() {
     >
       {/* ── Cheetah stripe ── */}
       <motion.img
-        src="/assets/cheetah-stripe.png"
+        src="/assets/bg/cheetah-stripe.png"
         className="scene-element"
         style={{
           left: l(1272),
@@ -158,7 +158,7 @@ export default function WelcomePage() {
       >
         {/* 1. Rainbow — furthest back */}
         <HoverImg
-          src="/assets/rainbow.png"
+          src="/assets/decoration/rainbow.png"
           style={{
             left: l(76),
             top: t(431),
@@ -171,14 +171,14 @@ export default function WelcomePage() {
 
         {/* 2. Orchid */}
         <HoverImg
-          src="/assets/green-orchid.png"
+          src="/assets/flowers/green-orchid.png"
           style={{ left: l(770), top: t(355), width: w(260), zIndex: 2 }}
           entranceDelay={0.45}
         />
 
         {/* 2. Pink lily */}
         <HoverImg
-          src="/assets/pink-lily.png"
+          src="/assets/flowers/pink-lily.png"
           style={{
             left: l(451),
             top: t(595),
@@ -191,7 +191,7 @@ export default function WelcomePage() {
 
         {/* 3. Shadow — blend overlay */}
         <motion.img
-          src="/assets/me-shadow.png"
+          src="/assets/photos/me-shadow.png"
           className="scene-element"
           style={{
             left: cx(409),
@@ -216,7 +216,7 @@ export default function WelcomePage() {
 
         {/* 5. Me photo — front */}
         <motion.img
-          src="/assets/me.png"
+          src="/assets/photos/me.png"
           className="scene-element"
           style={{ left: cx(354), top: cy(500), width: w(354), zIndex: 5 }}
           initial={{ opacity: 0, scale: 0.95 }}
@@ -229,14 +229,14 @@ export default function WelcomePage() {
       {/* ── Decorative stickers (no parallax, hover only) ── */}
 
       <HoverImg
-        src="/assets/spotted-lily.png"
+        src="/assets/flowers/spotted-lily.png"
         style={{ left: l(1009), top: t(16), width: w(397), zIndex: 6 }}
         entranceDelay={0.2}
       />
 
       {/* Silver star — special spin on hover */}
       <motion.img
-        src="/assets/silver-star.png"
+        src="/assets/decoration/silver-star.png"
         className="scene-element"
         style={{ left: l(64), top: t(157), width: w(139), zIndex: 6 }}
         initial={{ opacity: 0, scale: 0.5 }}
@@ -250,14 +250,14 @@ export default function WelcomePage() {
       />
 
       <HoverImg
-        src="/assets/cat-1.png"
+        src="/assets/decoration/cat-1.png"
         style={{ left: l(131), top: t(230), width: w(143), zIndex: 6 }}
         entranceDelay={0.15}
         hoverScale={1.15}
       />
 
       <HoverImg
-        src="/assets/silver-heart.png"
+        src="/assets/decoration/silver-heart.png"
         style={{
           left: l(475),
           top: t(142),
@@ -269,7 +269,7 @@ export default function WelcomePage() {
       />
 
       <HoverImg
-        src="/assets/blue-heart.png"
+        src="/assets/decoration/blue-heart.png"
         style={{
           left: l(1060),
           top: t(833),
@@ -281,7 +281,7 @@ export default function WelcomePage() {
       />
 
       <HoverImg
-        src="/assets/pink-double-star.png"
+        src="/assets/decoration/pink-double-star.png"
         style={{
           left: l(1156),
           top: t(859),
