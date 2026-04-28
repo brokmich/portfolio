@@ -125,21 +125,15 @@ export default function WelcomePage({ dismissing = false }) {
   return (
     <div ref={containerRef} className="welcome-page" onMouseMove={handleMouseMove}>
 
-      {/* ── Layer 0: Page background — slowest of all ───────────────────── */}
+      {/* ── Layer 0: Page background + cheetah stripe — slowest of all ───── */}
       <motion.div
         style={{
-          position:"absolute", inset:0, pointerEvents:"none",
+          position:"absolute", inset:0, pointerEvents:"none", overflow:"hidden",
           backgroundColor:'#F7E7E8',
           backgroundImage:'linear-gradient(#FFF0F1 2px,transparent 2px),linear-gradient(90deg,#FFF0F1 2px,transparent 2px)',
           backgroundSize:'3.5vw 3.5vw',
         }}
         {...layer(dismissing, "-105vh", 1.3, 0)}
-      />
-
-      {/* ── Layer 1: Cheetah stripe — slow ───────────────────────────────── */}
-      <motion.div
-        style={{ position:"absolute", inset:0, pointerEvents:"none" }}
-        {...layer(dismissing, "-120vh", 1.15, 0.08)}
       >
         <motion.img
           src="/assets/bg/cheetah-stripe.png"
@@ -180,15 +174,15 @@ export default function WelcomePage({ dismissing = false }) {
         />
       </motion.div>
 
-      {/* ── Me photo & shadow — fade out on dismiss (no transform = no blend-mode black) ── */}
+      {/* ── Me photo & shadow — rise on dismiss, mixBlendMode toggled to avoid black ── */}
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
         <motion.img
           src="/assets/photos/me-shadow.png"
           className="scene-element"
           style={{ pointerEvents:"none", left:cx(409), top:cy(578), width:w(409), mixBlendMode:"overlay", zIndex:3 }}
           initial={{ opacity:0 }}
-          animate={{ opacity: dismissing ? 0 : 1 }}
-          transition={{ duration: dismissing ? 0.4 : 0.8, delay: dismissing ? 0.3 : 0.35 }}
+          animate={{ opacity: dismissing ? 0 : 1, y: dismissing ? "-120vh" : 0 }}
+          transition={{ duration: dismissing ? 0.3 : 0.8, delay: dismissing ? 0.06 : 0.35, ease: dismissing ? [0.4,0,1,1] : "easeOut" }}
           alt=""
         />
         <motion.img
@@ -196,8 +190,8 @@ export default function WelcomePage({ dismissing = false }) {
           className="scene-element"
           style={{ pointerEvents:"none", left:cx(354), top:cy(500), width:w(354), zIndex:5 }}
           initial={{ opacity:0, scale:0.95 }}
-          animate={{ opacity: dismissing ? 0 : 1, scale: dismissing ? 0.95 : 1 }}
-          transition={{ duration: dismissing ? 0.4 : 0.6, delay: dismissing ? 0.3 : 0.4, ease: dismissing ? "easeIn" : "backOut" }}
+          animate={{ opacity:1, scale: dismissing ? 1 : 1, y: dismissing ? "-120vh" : 0 }}
+          transition={{ duration: dismissing ? 0.92 : 0.6, delay: dismissing ? 0.06 : 0.4, ease: dismissing ? [0.4,0,1,1] : "backOut" }}
           alt="Me"
         />
       </div>
