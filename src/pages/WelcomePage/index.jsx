@@ -125,10 +125,21 @@ export default function WelcomePage({ dismissing = false }) {
   return (
     <div ref={containerRef} className="welcome-page" onMouseMove={handleMouseMove}>
 
-      {/* ── Layer 1: Background — slowest ───────────────────────────────── */}
+      {/* ── Layer 0: Page background — slowest of all ───────────────────── */}
+      <motion.div
+        style={{
+          position:"absolute", inset:0, pointerEvents:"none",
+          backgroundColor:'#F7E7E8',
+          backgroundImage:'linear-gradient(#FFF0F1 2px,transparent 2px),linear-gradient(90deg,#FFF0F1 2px,transparent 2px)',
+          backgroundSize:'3.5vw 3.5vw',
+        }}
+        {...layer(dismissing, "-105vh", 1.3, 0)}
+      />
+
+      {/* ── Layer 1: Cheetah stripe — slow ───────────────────────────────── */}
       <motion.div
         style={{ position:"absolute", inset:0, pointerEvents:"none" }}
-        {...layer(dismissing, "-18vh", 1.15, 0.22)}
+        {...layer(dismissing, "-120vh", 1.15, 0.08)}
       >
         <motion.img
           src="/assets/bg/cheetah-stripe.png"
@@ -144,7 +155,7 @@ export default function WelcomePage({ dismissing = false }) {
       {/* ── Layer 2: Central composition — medium-slow ──────────────────── */}
       <motion.div
         style={{ position:"absolute", left:0, top:"calc(50vh - 35.556vw)", width:"100vw", height:"71.111vw", pointerEvents:"none" }}
-        {...layer(dismissing, "-65vh", 0.92, 0.06)}
+        {...layer(dismissing, "-120vh", 0.92, 0.06)}
       >
         <HoverImg
           src="/assets/decoration/rainbow.png"
@@ -161,36 +172,40 @@ export default function WelcomePage({ dismissing = false }) {
           style={{ left:l(451), top:t(595), width:w(150), rotate:"-71deg", zIndex:2 }}
           entranceDelay={0.6}
         />
-        <motion.img
-          src="/assets/photos/me-shadow.png"
-          className="scene-element"
-          style={{ left:cx(409), top:cy(578), width:w(409), mixBlendMode:"overlay", zIndex:3 }}
-          initial={{ opacity:0 }}
-          animate={{ opacity:1 }}
-          transition={{ duration:0.8, delay:0.35 }}
-          alt=""
-        />
         <HoverImg
           src="/assets/letters/bedazzled-m.png"
           style={{ left:l(768), top:t(513), width:w(253), zIndex:4 }}
           entranceDelay={0.7}
           hoverScale={1.08}
         />
+      </motion.div>
+
+      {/* ── Me photo & shadow — fade out on dismiss (no transform = no blend-mode black) ── */}
+      <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
+        <motion.img
+          src="/assets/photos/me-shadow.png"
+          className="scene-element"
+          style={{ pointerEvents:"none", left:cx(409), top:cy(578), width:w(409), mixBlendMode:"overlay", zIndex:3 }}
+          initial={{ opacity:0 }}
+          animate={{ opacity: dismissing ? 0 : 1 }}
+          transition={{ duration: dismissing ? 0.4 : 0.8, delay: dismissing ? 0.3 : 0.35 }}
+          alt=""
+        />
         <motion.img
           src="/assets/photos/me.png"
           className="scene-element"
-          style={{ pointerEvents:"auto", left:cx(354), top:cy(500), width:w(354), zIndex:5 }}
+          style={{ pointerEvents:"none", left:cx(354), top:cy(500), width:w(354), zIndex:5 }}
           initial={{ opacity:0, scale:0.95 }}
-          animate={{ opacity:1, scale:1 }}
-          transition={{ duration:0.6, delay:0.4, ease:"backOut" }}
+          animate={{ opacity: dismissing ? 0 : 1, scale: dismissing ? 0.95 : 1 }}
+          transition={{ duration: dismissing ? 0.4 : 0.6, delay: dismissing ? 0.3 : 0.4, ease: dismissing ? "easeIn" : "backOut" }}
           alt="Me"
         />
-      </motion.div>
+      </div>
 
       {/* ── Layer 3: Stickers & flowers — medium-fast ───────────────────── */}
       <motion.div
         style={{ position:"absolute", inset:0, pointerEvents:"none" }}
-        {...layer(dismissing, "-95vh", 0.76, 0.02)}
+        {...layer(dismissing, "-120vh", 0.76, 0.02)}
       >
         <HoverImg
           src="/assets/flowers/spotted-lily.png"
@@ -234,7 +249,7 @@ export default function WelcomePage({ dismissing = false }) {
       {/* ── Layer 4: Letters — fastest ──────────────────────────────────── */}
       <motion.div
         style={{ position:"absolute", inset:0, zIndex:10, pointerEvents:"none" }}
-        {...layer(dismissing, "-130vh", 0.62, 0)}
+        {...layer(dismissing, "-120vh", 0.62, 0)}
       >
         <motion.div className="parallax-layer" style={{ x:x3, y:y3 }}>
           <LetterWord letters={welcomeLetters}   startDelay={0}    />

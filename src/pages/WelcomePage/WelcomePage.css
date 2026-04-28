@@ -4,11 +4,6 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #F7E7E8;
-  background-image:
-    linear-gradient(#FFF0F1 2px, transparent 2px),
-    linear-gradient(90deg, #FFF0F1 2px, transparent 2px);
-  background-size: 3.5vw 3.5vw;
   cursor: default;
   user-select: none;
 }
