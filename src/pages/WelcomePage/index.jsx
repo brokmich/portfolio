@@ -85,7 +85,7 @@ function HoverImg({ src, style, entranceDelay = 0, hoverScale = 1.06 }) {
     <motion.img
       src={src}
       className="scene-element"
-      style={style}
+      style={{ pointerEvents:"auto", ...style }}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
@@ -127,7 +127,7 @@ export default function WelcomePage({ dismissing = false }) {
 
       {/* ── Layer 1: Background — slowest ───────────────────────────────── */}
       <motion.div
-        style={{ position:"absolute", inset:0 }}
+        style={{ position:"absolute", inset:0, pointerEvents:"none" }}
         {...layer(dismissing, "-18vh", 1.15, 0.22)}
       >
         <motion.img
@@ -143,7 +143,7 @@ export default function WelcomePage({ dismissing = false }) {
 
       {/* ── Layer 2: Central composition — medium-slow ──────────────────── */}
       <motion.div
-        style={{ position:"absolute", left:0, top:"calc(50vh - 35.556vw)", width:"100vw", height:"71.111vw" }}
+        style={{ position:"absolute", left:0, top:"calc(50vh - 35.556vw)", width:"100vw", height:"71.111vw", pointerEvents:"none" }}
         {...layer(dismissing, "-65vh", 0.92, 0.06)}
       >
         <HoverImg
@@ -179,7 +179,7 @@ export default function WelcomePage({ dismissing = false }) {
         <motion.img
           src="/assets/photos/me.png"
           className="scene-element"
-          style={{ left:cx(354), top:cy(500), width:w(354), zIndex:5 }}
+          style={{ pointerEvents:"auto", left:cx(354), top:cy(500), width:w(354), zIndex:5 }}
           initial={{ opacity:0, scale:0.95 }}
           animate={{ opacity:1, scale:1 }}
           transition={{ duration:0.6, delay:0.4, ease:"backOut" }}
@@ -189,7 +189,7 @@ export default function WelcomePage({ dismissing = false }) {
 
       {/* ── Layer 3: Stickers & flowers — medium-fast ───────────────────── */}
       <motion.div
-        style={{ position:"absolute", inset:0 }}
+        style={{ position:"absolute", inset:0, pointerEvents:"none" }}
         {...layer(dismissing, "-95vh", 0.76, 0.02)}
       >
         <HoverImg
@@ -200,7 +200,7 @@ export default function WelcomePage({ dismissing = false }) {
         <motion.img
           src="/assets/decoration/silver-star.png"
           className="scene-element"
-          style={{ left:l(64), top:t(157), width:w(139), zIndex:6 }}
+          style={{ pointerEvents:"auto", left:l(64), top:t(157), width:w(139), zIndex:6 }}
           initial={{ opacity:0, scale:0.5 }}
           animate={{ opacity:1, scale:1 }}
           transition={{ opacity:{ duration:0.4, delay:0.1 }, scale:{ duration:0.4, delay:0.1, ease:"backOut" } }}
@@ -233,7 +233,7 @@ export default function WelcomePage({ dismissing = false }) {
 
       {/* ── Layer 4: Letters — fastest ──────────────────────────────────── */}
       <motion.div
-        style={{ position:"absolute", inset:0, zIndex:10 }}
+        style={{ position:"absolute", inset:0, zIndex:10, pointerEvents:"none" }}
         {...layer(dismissing, "-130vh", 0.62, 0)}
       >
         <motion.div className="parallax-layer" style={{ x:x3, y:y3 }}>
