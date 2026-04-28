@@ -9,6 +9,8 @@ const SCALE = 0.78;
 const l = (px) => `${((px / W) * 100).toFixed(3)}%`;
 const t = (px) => `${((px / H) * 100).toFixed(3)}%`;
 const w = (px) => `${((px / W) * 100 * SCALE).toFixed(3)}vw`;
+// vw-only helper: both axes scale with viewport width so letters stay together
+const lvw = (px) => `${((px / W) * 100).toFixed(3)}vw`;
 const cx = (widthPx) =>
   `calc(50% - ${(((widthPx / W) * 100 * SCALE) / 2).toFixed(3)}vw)`;
 const cy = (heightPx) =>
@@ -17,39 +19,43 @@ const cy = (heightPx) =>
 // ── Letter data ───────────────────────────────────────────────────────────────
 const welcomeLetters = [
   { char: "W", left: 178, top: 174, rotate: 0, hoverR: -10 },
-  { char: "E", left: 232, top: 185, rotate: 0, hoverR: 8 },
-  { char: "L", left: 286, top: 182, rotate: -13, hoverR: -8 },
-  { char: "C", left: 350, top: 185, rotate: 0, hoverR: 8 },
-  { char: "O", left: 412, top: 177, rotate: 9, hoverR: 14 },
-  { char: "M", left: 465, top: 179, rotate: -9, hoverR: -14 },
-  { char: "E", left: 526, top: 185, rotate: 0, hoverR: 8 },
+  { char: "E", left: 221, top: 185, rotate: 0, hoverR: 8 },
+  { char: "L", left: 264, top: 182, rotate: -13, hoverR: -8 },
+  { char: "C", left: 315, top: 185, rotate: 0, hoverR: 8 },
+  { char: "O", left: 365, top: 177, rotate: 9, hoverR: 14 },
+  { char: "M", left: 407, top: 179, rotate: -9, hoverR: -14 },
+  { char: "E", left: 456, top: 185, rotate: 0, hoverR: 8 },
 ];
 
 const toLetters = [
   { char: "T", left: 489, top: 338.32, rotate: -13, hoverR: -8 },
-  { char: "O", left: 549.38, top: 339, rotate: 17, hoverR: 12 },
+  { char: "O", left: 537, top: 339, rotate: 17, hoverR: 12 },
+];
+
+const myLetters = [
+  { char: "M", left: 908, top: 728.29, rotate: -11, hoverR: -16 },
+  { char: "Y", left: 954, top: 729, rotate: 7, hoverR: 12 },
 ];
 
 const portfolioLetters = [
-  { char: "M", left: 908, top: 728.29, rotate: -11, hoverR: -16 },
-  { char: "Y", left: 965.84, top: 729, rotate: 7, hoverR: 12 },
-  { char: "P", left: 900, top: 854, rotate: 8, hoverR: 13 },
-  { char: "O", left: 937, top: 824.09, rotate: -19, hoverR: -14 },
-  { char: "R", left: 986, top: 808.33, rotate: -33, hoverR: -28 },
-  { char: "T", left: 1049, top: 785.61, rotate: -5, hoverR: -10 },
-  { char: "F", left: 1080, top: 760, rotate: 13, hoverR: 18 },
-  { char: "O", left: 1140, top: 755.86, rotate: -14, hoverR: -19 },
-  { char: "L", left: 1177, top: 714.59, rotate: -16, hoverR: -21 },
-  { char: "I", left: 1217, top: 690.62, rotate: -8, hoverR: -13 },
-  { char: "O", left: 1271.77, top: 676, rotate: 20, hoverR: 25 },
+  { char: "P", left: 900, top: 894, rotate: 8, hoverR: 13 },
+  { char: "O", left: 930, top: 864.09, rotate: -19, hoverR: -14 },
+  { char: "R", left: 969, top: 848.33, rotate: -33, hoverR: -28 },
+  { char: "T", left: 1019, top: 825.61, rotate: -5, hoverR: -10 },
+  { char: "F", left: 1044, top: 800, rotate: 13, hoverR: 18 },
+  { char: "O", left: 1092, top: 795.86, rotate: -14, hoverR: -19 },
+  { char: "L", left: 1122, top: 754.59, rotate: -16, hoverR: -21 },
+  { char: "I", left: 1154, top: 730.62, rotate: -8, hoverR: -13 },
+  { char: "O", left: 1198, top: 716, rotate: 20, hoverR: 25 },
 ];
 
-// ── Letter component (parallax + hover + float) ───────────────────────────────
-function BounceLetterImg({ char, left, top, rotate, hoverR, delay }) {
+// ── Letter component ──────────────────────────────────────────────────────────
+// leftCss / topCss are pre-computed CSS strings passed by LetterWord
+function BounceLetterImg({ char, leftCss, topCss, rotate, hoverR, delay }) {
   return (
     <motion.div
       className="letter-wrapper"
-      style={{ left: l(left), top: t(top), rotate }}
+      style={{ left: leftCss, top: topCss, rotate }}
       initial={{ opacity: 0, scale: 0.5, y: 15 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.4, delay, ease: [0.34, 1.56, 0.64, 1] }}
@@ -73,6 +79,31 @@ function BounceLetterImg({ char, left, top, rotate, hoverR, delay }) {
         alt={char}
       />
     </motion.div>
+  );
+}
+
+// ── Word group: anchor at first letter, offsets in vw so all letters scale together
+function LetterWord({ letters, startDelay = 0, delayStep = 0.05 }) {
+  const anchor = letters[0];
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: l(anchor.left),
+        top: t(anchor.top),
+        pointerEvents: "none",
+      }}
+    >
+      {letters.map((letter, i) => (
+        <BounceLetterImg
+          key={i}
+          {...letter}
+          leftCss={lvw(letter.left - anchor.left)}
+          topCss={lvw(letter.top - anchor.top)}
+          delay={startDelay + delayStep * i}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -293,24 +324,15 @@ export default function WelcomePage() {
         hoverScale={1.15}
       />
 
-      {/* ── Letters — parallax only ── */}
+      {/* ── Letters — parallax + word groups ── */}
       <motion.div
         className="parallax-layer"
         style={{ x: x3, y: y3, zIndex: 10 }}
       >
-        {welcomeLetters.map((letter, i) => (
-          <BounceLetterImg key={`w-${i}`} {...letter} delay={0.05 * i} />
-        ))}
-        {toLetters.map((letter, i) => (
-          <BounceLetterImg key={`t-${i}`} {...letter} delay={0.38 + 0.06 * i} />
-        ))}
-        {portfolioLetters.map((letter, i) => (
-          <BounceLetterImg
-            key={`p-${i}`}
-            {...letter}
-            delay={0.55 + 0.05 * i}
-          />
-        ))}
+        <LetterWord letters={welcomeLetters} startDelay={0} />
+        <LetterWord letters={toLetters} startDelay={0.38} delayStep={0.06} />
+        <LetterWord letters={myLetters} startDelay={0.55} />
+        <LetterWord letters={portfolioLetters} startDelay={0.60} />
       </motion.div>
     </div>
   );

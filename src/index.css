@@ -20,3 +20,52 @@ body {
   width: 100%;
   height: 100vh;
 }
+
+@keyframes floatA {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+@keyframes letterFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+@keyframes termCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.float-a { animation: floatA 3.2s ease-in-out infinite; }
+.float-b { animation: floatB 2.6s ease-in-out 0.4s infinite; }
+.float-c { animation: floatA 4s ease-in-out 1s infinite; }
+
+/* Hide scrollbar on snap container */
+.snap-container::-webkit-scrollbar { display: none; }
+
+.side-nav {
+  position: fixed; right: 18px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 14px;
+  z-index: 9999;
+}
+.nav-dot-wrap { position: relative; cursor: pointer; }
+.nav-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(161,61,111,0.28);
+  transition: all 0.2s ease;
+}
+.nav-dot.active { background: rgb(161,61,111); transform: scale(1.5); }
+.nav-dot-wrap:hover .nav-dot { background: rgb(161,61,111); transform: scale(1.3); }
+.nav-label {
+  position: absolute; right: 20px; top: 50%;
+  transform: translateY(-50%);
+  background: rgb(161,61,111); color: white;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  padding: 3px 9px; border-radius: 4px;
+  white-space: nowrap; opacity: 0;
+  transition: opacity 0.15s ease; pointer-events: none;
+}
+.nav-dot-wrap:hover .nav-label { opacity: 1; }

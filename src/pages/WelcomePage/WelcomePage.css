@@ -35,13 +35,14 @@
 .letter-wrapper {
   position: absolute;
   cursor: pointer;
+  pointer-events: auto;
 }
 
 /* ── Letter: scaled down to match SCALE factor ── */
 .letter-img {
   display: block;
-  width: 2.65vw;
-  min-width: 22px;
+  width: 2vw;
+  min-width: 18px;
   height: auto;
   pointer-events: none;
 }
